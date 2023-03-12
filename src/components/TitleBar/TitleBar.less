@@ -1,0 +1,51 @@
+#titleBar {
+
+    height: 25px;
+    display: flex;
+    align-items: stretch;
+    background-color: #252525;
+    flex-shrink: 0;
+
+    &-main {
+        flex-grow: 1;
+        -webkit-app-region: drag;
+    }
+
+    &-controls {
+        display: flex;
+        align-items: stretch;
+        padding-right: 10px;
+        --clr: #444444;
+
+        opacity: 0.4;
+        &:hover { opacity: 1 }
+
+        transition: opacity 0.1s ease;
+
+        & > button {
+            height: 100%;
+            width: 20px;
+            display: grid;
+            place-items: center;
+
+            & > div {
+                width: 10px;
+                height: 10px;
+
+                border-radius: 50%;
+                background-color: var(--clr);
+
+            }
+
+            &#close:hover div  {
+                --clr: #ff5f56;
+            }
+            &#minimize:hover div  {
+                --clr: #ffbd2e;
+            }
+            &#maximize:hover div {
+                --clr: #27c93f;
+            }
+        }
+    }
+}

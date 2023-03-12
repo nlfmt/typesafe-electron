@@ -1,0 +1,10 @@
+node_modules
+
+dist-electron
+dist
+
+.vscode
+pnpm-lock.yaml
+
+*.exe
+*.sqlite
