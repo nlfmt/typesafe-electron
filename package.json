@@ -1,19 +1,22 @@
 {
-  "name": "ivy-dl",
+  "name": "typesafe-electron",
   "version": "1.0.0",
-  "description": "A simple to use video downloader and converter.",
+  "description": "Adds easy type safety for electron's IPC communication",
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
-    "db:push": "prisma db push --skip-generate && prisma generate"
+    "build": "vite build",
+    "dist": "echo 'Not yet implemented'",
+    "db:push": "prisma db push",
+    "db:reset": "prisma migrate reset"
   },
   "keywords": [
-    "youtube",
-    "downloader",
-    "converter",
-    "video",
-    "audio",
-    "graphical"
+    "vite",
+    "electron",
+    "typescript",
+    "react",
+    "prisma",
+    "less"
   ],
   "author": "",
   "license": "MIT",

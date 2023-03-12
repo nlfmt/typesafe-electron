@@ -1,6 +1,6 @@
 # Typesafety for Electron Apps!
 
-This template show how you can achieve type safety for Electron IPC communication. \
+This template shows how you can achieve type safety for Electron IPC communication. \
 By adding definitions of your IPC functions in one central file, you can get intellisense \
 and type safety anywhere in your codebase.
 
@@ -36,3 +36,20 @@ and type safety anywhere in your codebase.
     ```
     pnpm dev
     ```
+
+## What's included in this template? (Packages)
+
+- vite
+- typescript
+- electron
+- react
+- less (easily exchangeable)
+- prisma (easily exchangeable, but I recommend it)
+- the-new-css-reset
+    - This package resets CSS styles, you may prefer to use a different one.
+    - to remove, delete the import in `src/inde.tsx` and uninstall the package
+- svgr + vite svgr plugin
+    - This package allows you to import SVGs as React components
+    - to remove, remove the vite plugin from `vite.config.ts` and uninstall the package
+- moment
+  - This date package is used in my logger (`electron/util/logger.ts`), feel free to replace it with another one
