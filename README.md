@@ -32,7 +32,11 @@ and type safety anywhere in your codebase.
 
     api.myFunction('Hello World!').then(console.log)
     ```
-5. Run the dev script to start the app
+5. Since this project uses prisma by default we have to generate the client
+    ```sh
+    pnpm db:push
+    ```
+6. Run the dev script to start the app
     ```
     pnpm dev
     ```
