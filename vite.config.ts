@@ -9,7 +9,7 @@ import svgr from "vite-plugin-svgr";
 
 
 export default defineConfig(({ command }) => {
-    rmSync("dist/electron", { recursive: true, force: true });
+    rmSync("build/electron", { recursive: true, force: true });
 
     const sourcemap = command === "serve" ? "inline" : false;
 
@@ -34,13 +34,13 @@ export default defineConfig(({ command }) => {
             electron({
                 include: ["electron"],
                 transformOptions: { sourcemap },
-                outDir: "dist/electron",
+                outDir: "build/electron",
                 plugins: [ loadViteEnv() ],
             })
         ],
         build: {
             sourcemap,
-            outDir: "dist/renderer",
+            outDir: "build/renderer",
             rollupOptions: {
                 input: {
                     app: "index.html",

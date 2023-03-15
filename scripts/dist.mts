@@ -18,45 +18,22 @@ if (process.env.VITE_APP_VERSION === undefined) {
     process.env.VITE_APP_VERSION = `${m.format("YYYY.M.D")}-${m.hours()*60+m.minutes()}`
 }
 
-// console.log({
-//     extraResources: [
-//         "resources/db.sqlite",
-//         "prisma\\**",
-//         {
-//             from: relative(__dirname, join(fs.realpathSync("node_modules/prisma/prisma-client"), "/**/*")),
-//             to: "prisma-client",
-//         },
-//         join(fs.realpathSync("node_modules/@prisma/client"), "/**/*"),
-//     ],
-// });
-
-const extraResources = [
-    "resources/db.sqlite",
-    // {
-    //     from: join(fs.realpathSync("node_modules/prisma"), "../@prisma/**/*"),
-    //     to: "node_modules/@prisma"
-    // },
-    // {
-    //     from: join(fs.realpathSync("node_modules/prisma"), "../.prisma/client/**/*"),
-    //     to: "node_modules/.prisma/client"
-    // },
-]
-// process.exit(0);
 const config: Configuration = {
     appId, productName, icon,
     asar: false,
 
     directories: {
-        output: "build",
+        output: "dist",
         buildResources: "resources"
     },
     files: [
-        "dist/electron/**", "dist/renderer/**", "package.json"
+        { from: "build/electron", to: "electron" },
+        { from: "build/renderer", to: "renderer" },
+        "package.json"
     ],
     extraMetadata: {
         version: process.env.VITE_APP_VERSION
     },
-    extraResources,
     win: {
         target: ["nsis", "zip"],
         icon,
