@@ -18,16 +18,15 @@ export function createWindow() {
             preload: join(__dirname, "./bridge/preload.js")
         },
         frame: false,
-        icon: join(__dirname, "../public/favicon.ico")
+        icon: join(__dirname, "../../resources/favicon.ico")
     });
 
     (import.meta.env.DEV && process.env.VITE_DEV_SERVER_URL
         ? win.loadURL(process.env.VITE_DEV_SERVER_URL)
-        : win.loadFile(join(__dirname, "../dist/index.html"))
+        : win.loadFile(join(__dirname, "../renderer/index.html"))
     ).then(() => {
-        logger.info("Window loaded");
         win?.show();
-        win?.webContents.openDevTools({ mode: "detach" });
+        win?.webContents.openDevTools({ mode: "detach", activate: false });
     });
 
     win?.on("closed", async () => {

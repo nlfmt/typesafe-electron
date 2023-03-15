@@ -1,9 +1,15 @@
 node_modules
 
-dist-electron
+# Generated files
 dist
+build
 
+# IDE files
 .vscode
+.idea
+.DS_Store
+
+# lock files
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
