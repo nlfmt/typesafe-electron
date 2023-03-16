@@ -20,15 +20,17 @@ if (process.env.VITE_APP_VERSION === undefined) {
 
 const config: Configuration = {
     appId, productName, icon,
-    asar: false,
+    asar: true,
 
     directories: {
         output: "dist",
         buildResources: "resources"
     },
     files: [
-        { from: "build/electron", to: "electron" },
-        { from: "build/renderer", to: "renderer" },
+        // { from: "build/electron", to: "electron" },
+        // { from: "build/renderer", to: "renderer" },
+        "build/electron",
+        "build/renderer",
         "package.json"
     ],
     extraMetadata: {

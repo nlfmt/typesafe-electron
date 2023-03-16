@@ -2,8 +2,6 @@ import { BrowserWindow, app } from "electron";
 import { join } from "node:path";
 
 import bridge from "./bridge";
-import prisma from "./util/prisma";
-import logger from "./util/logger";
 
 let win: BrowserWindow | null = null;
 
@@ -31,7 +29,6 @@ export function createWindow() {
 
     win?.on("closed", async () => {
         win = null;
-        await prisma.$disconnect();
         app.quit();
     });
 }

@@ -38,6 +38,7 @@
     "vite-plugin-svgr": "^2.4.0"
   },
   "dependencies": {
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "zod": "^3.21.4"
   }
 }
