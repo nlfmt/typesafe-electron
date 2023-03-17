@@ -7,4 +7,14 @@ const user = z.object({
     tuple: z.tuple([z.string(), z.number()]),
 });
 
-export default { user } as const;
+
+const post = z.object({
+    title: z.string().nonempty().describe("The post's title"),
+    content: z.string().nonempty().describe("The post's content"),
+    data: z.object({
+        test: z.string().nonempty().describe("The post's test"),
+    }),
+});
+
+
+export { user, post };

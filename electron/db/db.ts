@@ -1,6 +1,12 @@
 import { app } from "electron";
-import { join } from "node:path";
-import fs from "fs";
+import JsonDB from "./jsondb";
+import path from "path";
 
-const DB_PATH = join(app.getPath("userData"), "db.json");
-const db = JSON.parse(fs.readFileSync(DB_PATH, "utf-8"));
+import { post, user } from "./models";
+
+const db = JsonDB(path.join(app.getPath("userData"), "db.json"), {
+    user,
+    post,
+});
+
+export default db;
