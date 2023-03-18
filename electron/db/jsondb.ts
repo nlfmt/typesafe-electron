@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import z from "zod";
-import fs from "fs";
+import fs from "node:fs/promises";
 
 
 /** Convert a model type to a query type, so arrays can be queried with $contains and $is */
@@ -35,18 +35,20 @@ function JsonDB<ModelDef extends Record<string, z.ZodSchema<any>>>(path: string,
     type MODEL_NAME = keyof ModelDef;
     type MODELS_T = { [K in MODEL_NAME]: z.infer<ModelDef[K]> };
 
+    let DB: any = {};
 
     /** A class that handles all queries for a specific model */
     class DBQueryClient<K extends MODEL_NAME> {
         private mdl: K;
+        private db: DBManager;
         /** Stores a map of model names to their query clients to prevent multiple instances of the same model's query client */
         private static clients = new Map<MODEL_NAME, DBQueryClient<MODEL_NAME>>();
 
-        constructor(model: K) { this.mdl = model }
+        constructor(db: DBManager, model: K) { this.mdl = model; this.db = db; }
 
-        static for(model: MODEL_NAME) {
+        static for(db: DBManager, model: MODEL_NAME) {
             if (!DBQueryClient.clients.has(model))
-                DBQueryClient.clients.set(model, new DBQueryClient(model));
+                DBQueryClient.clients.set(model, new DBQueryClient(db, model));
             return DBQueryClient.clients.get(model);
         }
 
@@ -93,24 +95,69 @@ function JsonDB<ModelDef extends Record<string, z.ZodSchema<any>>>(path: string,
             const { mdl } = this;
             const modelSchema = models[mdl];
 
-            return null;
+            // check if the object is valid
+            try {
+                modelSchema.parse(obj);
+            } catch (err) {
+                console.error(err);
+                return null;
+            }
+
+            // insert the object
+            const newObj = { ...obj, _id: new ObjectId() };
+            DB[mdl].push(newObj);
+
+            // save the database
+            this.db.$save();
+
+            return newObj;
         }
     }
 
 
     class DBManager  {
-        private data: any;
         private path: string;
         private models: { [K: string]: z.ZodSchema<any> };
 
         constructor(path: string, models: { [K: string]: z.ZodSchema<any> }) {
             this.path = path;
-            this.data = JSON.parse(fs.readFileSync(path, "utf-8"));
             this.models = models;
+            this.loadFromFile();
         }
 
-        $save() {
+        private async loadFromFile() {
+            try {
+                await fs.access(path, fs.constants.R_OK | fs.constants.W_OK);
+                DB = JSON.parse(await fs.readFile(path, "utf-8"));
 
+                // Validate the data
+                for (const model in models) {
+                    const modelSchema = models[model];
+                    const modelData = DB[model];
+                    if (!modelData || !Array.isArray(modelData)) throw new Error(`Invalid data for model ${model}`);
+
+                    // TODO: Should we typecheck here or assume it has been written correctly?
+                    // if (modelData) {
+                    //     for (const doc of modelData) {
+                    //         modelSchema.parse(doc);
+                    //     }
+                    // }
+                }
+            } catch (e) {
+                fs.writeFile(path, "{}", "utf-8");
+                DB = {};
+                for (const model in models) {
+                    DB[model] = [];
+                }
+            }
+        }
+
+        async $save() {
+            await fs.writeFile(path, JSON.stringify(DB), "utf-8");
+        }
+
+        async $disconnect() {
+            await this.$save();
         }
     }
 
@@ -121,7 +168,7 @@ function JsonDB<ModelDef extends Record<string, z.ZodSchema<any>>>(path: string,
             prop = String(prop);
             const model = prop as MODEL_NAME;
     
-            if (prop in models) return DBQueryClient.for(model);
+            if (prop in models) return DBQueryClient.for(db, model);
             else if (prop in db) return db[prop as keyof typeof db];
             else throw new Error(`Unknown property ${prop} in DBClient`);
         }

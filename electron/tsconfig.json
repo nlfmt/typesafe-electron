@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "target": "ESNext",
+        "lib": ["ESNext", "DOM"],
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "baseUrl": "../",
+        "paths": {
+            "@/*": ["./*"]
+        }
+    },
+    "include": ["./**/*"],
+    "ts-node": {
+        "esm": true
+    }
+}
