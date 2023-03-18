@@ -6,7 +6,7 @@ import { post, user } from "./models";
 
 const db = JsonDB(path.join(app.getPath("userData"), "db.json"), {
     user,
-    post,
+    post
 });
 
 export default db;

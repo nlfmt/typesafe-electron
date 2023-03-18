@@ -23,7 +23,7 @@
             "@/*": ["src/*"]
         }
     },
-    "include": ["src/**/*", "electron/**/*"],
+    "include": ["src/**/*"],
     "ts-node": {
         "esm": true
     }
