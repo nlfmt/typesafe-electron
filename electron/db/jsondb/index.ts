@@ -2,6 +2,10 @@ import DBQueryClient from "./DBQueryClient";
 import DBManager from "./DBManager";
 import z from "zod";
 
+import { ObjectId, Transformer } from "./utils";
+import { DBDocument, DBManagerOptions, FindQuery, InferModelDef, JSONValue, Predicate } from "./types";
+export { ObjectId, DBDocument, FindQuery, InferModelDef, JSONValue, Predicate, Transformer, DBManagerOptions };
+
 /**
  * Create a new JsonDB client
  * @param path The path to the database file
@@ -10,9 +14,16 @@ import z from "zod";
  */
 export default function JsonDB<
     ModelDef extends Record<string, z.ZodSchema<any>>
->(path: string, models: ModelDef) {
-    const manager = new DBManager(path, models);
+>(
+    path: string,
+    models: ModelDef,
+    options: DBManagerOptions = {
+        transformers: []
+    }
+) {
+    const manager = new DBManager(path, models, options);
 
+    // Using a proxy we can map model names to query clients
     return new Proxy(manager, {
         get(manager, prop) {
             prop = String(prop);
@@ -26,5 +37,5 @@ export default function JsonDB<
         }
     }) as {
         [K in keyof ModelDef]: DBQueryClient<ModelDef, K>;
-    } & Pick<typeof manager, "$disconnect" | "$save">;
+    } & Pick<typeof manager, "$disconnect" | "$save" | "$ready">;
 }

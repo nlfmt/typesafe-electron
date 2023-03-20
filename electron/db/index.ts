@@ -4,7 +4,7 @@ import path from "path";
 
 import { post, user } from "./models";
 
-const db = JsonDB(path.join(app.getPath("userData"), "db.json"), {
+const db = JsonDB("./db.json" /*path.join(app.getPath("userData"), "db.json")*/, {
     user,
     post
 });
