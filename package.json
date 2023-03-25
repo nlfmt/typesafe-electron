@@ -39,6 +39,7 @@
     "vite-plugin-svgr": "^2.4.0"
   },
   "dependencies": {
+    "@nlfmt/stormdb": "^0.1.2",
     "moment": "^2.29.4",
     "uuid": "^9.0.0",
     "zod": "^3.21.4"
