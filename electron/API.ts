@@ -13,7 +13,7 @@ export type API = {
     /** Closes the application window */
     close: () => Promise<void>
 
-    // define your API here
+    // TODO: define your API here
 }
 
 
@@ -21,7 +21,6 @@ export type API = {
  * Named events that can be emitted by the main process
  */
 export type EVENT_FROM_MAIN = {
-    // example:
     // example: (data: string) => void
 }
 
