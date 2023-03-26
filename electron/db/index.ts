@@ -2,13 +2,10 @@ import { app } from "electron";
 import StormDB from "@nlfmt/stormdb";
 import path from "path";
 
-import { postModel, userModel } from "./models";
+import models from "./models";
 export * from "./models";
 
-const db = StormDB({
-    user: userModel,
-    post: postModel
-}, {
+const db = StormDB(models, {
     storage: path.join(app.getPath("userData"), "db.json")
 });
 
