@@ -1,11 +1,6 @@
 import builder, { Configuration } from "electron-builder";
-import { join, relative, dirname } from "path";
-import { fileURLToPath } from "url";
 import moment from "moment";
-import fs from "fs";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const appId = "com.example.app";
 const productName = "Example App";
@@ -27,8 +22,6 @@ const config: Configuration = {
         buildResources: "resources"
     },
     files: [
-        // { from: "build/electron", to: "electron" },
-        // { from: "build/renderer", to: "renderer" },
         "build/electron",
         "build/renderer",
         "package.json"
@@ -41,6 +34,14 @@ const config: Configuration = {
         icon,
         requestedExecutionLevel: "asInvoker"
     },
+    nsis: {
+        oneClick: false,
+        perMachine: true,
+        allowToChangeInstallationDirectory: true,
+        createDesktopShortcut: true,
+        createStartMenuShortcut: true,
+        shortcutName: productName,
+    },
     linux: {
         target: ["AppImage", "tar.gz"],
     },
@@ -48,13 +49,11 @@ const config: Configuration = {
         target: ["dmg", "zip"],
         icon: macIcon,
     }
-
 };
 
 builder
     .build({
         config,
-        dir: true
     })
     .then((result) => {
         console.log(JSON.stringify(result));

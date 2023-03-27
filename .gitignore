@@ -13,7 +13,3 @@ build
 pnpm-lock.yaml
 yarn.lock
 package-lock.json
-
-*.exe
-*.sqlite
-*.sqlite-journal

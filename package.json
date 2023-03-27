@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "dist": "pnpm build && ts-node ./scripts/dist.mts"
+    "dist": "vite build && ts-node ./scripts/dist.mts"
   },
   "keywords": [
     "vite",
@@ -16,7 +16,7 @@
     "prisma",
     "less"
   ],
-  "author": "",
+  "author": "nlfmt",
   "license": "MIT",
   "devDependencies": {
     "@total-typescript/ts-reset": "^0.3.7",

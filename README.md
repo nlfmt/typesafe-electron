@@ -32,11 +32,7 @@ and type safety anywhere in your codebase.
 
     api.myFunction('Hello World!').then(console.log)
     ```
-5. Since this project uses prisma by default we have to generate the client
-    ```sh
-    pnpm db:push
-    ```
-6. Run the dev script to start the app
+5. Run the dev script to start the app
     ```
     pnpm dev
     ```
@@ -48,7 +44,7 @@ and type safety anywhere in your codebase.
 - electron
 - react
 - less (easily exchangeable)
-- prisma (easily exchangeable, but I recommend it)
+- stormdb (easily exchangeable, but I recommend it)
 - the-new-css-reset
     - This package resets CSS styles, you may prefer to use a different one.
     - to remove, delete the import in `src/inde.tsx` and uninstall the package
